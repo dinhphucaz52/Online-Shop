@@ -2,8 +2,8 @@ package com.example.onlineshop.data.repository
 
 import com.example.onlineshop.data.api.APIService
 import com.example.onlineshop.data.api.RetrofitClient
-import com.example.onlineshop.data.api.dto.ProductDTO
-import com.example.onlineshop.data.api.dto.response.GetProductResponse
+import com.example.onlineshop.data.api.dto.response.GetCartResponse
+import com.example.onlineshop.data.model.Cart
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -11,29 +11,30 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainRepository {
+class CartRepository {
 
     private val apiService: APIService? =
         RetrofitClient.getRetrofitInstance().create(APIService::class.java)
 
-    suspend fun getProducts(): List<ProductDTO> {
+    suspend fun getCarts(): Cart {
         return withContext(Dispatchers.IO) {
-            val deferred = CompletableDeferred<List<ProductDTO>>()
+            val deferred = CompletableDeferred<Cart>()
 
-            apiService?.getProduct()?.enqueue(object : Callback<GetProductResponse> {
+            apiService?.getCart()?.enqueue(object : Callback<GetCartResponse> {
                 override fun onResponse(
-                    call: Call<GetProductResponse>,
-                    response: Response<GetProductResponse>
+                    call: Call<GetCartResponse>,
+                    response: Response<GetCartResponse>
                 ) {
-                    deferred.complete(response.body()?.data ?: listOf())
-                    println("MainRepository -> signIn -> onResponse: ${response.body()}")
+                    println("CartRepository -> getCarts -> onResponse: $response")
+                    (response.body()?.data)?.let { deferred.complete(Cart(it)) }
                 }
 
-                override fun onFailure(call: Call<GetProductResponse>, throwable: Throwable) {
+                override fun onFailure(call: Call<GetCartResponse>, throwable: Throwable) {
                     println("MainRepository -> signIn -> onFailure: $throwable")
                 }
             })
             deferred.await()
         }
     }
+
 }

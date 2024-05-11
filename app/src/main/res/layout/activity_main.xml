@@ -18,6 +18,7 @@
 
 
         <TextView
+            android:id="@+id/name_user_text_view"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -75,8 +76,7 @@
 
     </LinearLayout>
 
-    <androidx.appcompat.widget.SearchView
-        style="@style/Widget.AppCompat.SearchView"
+    <SearchView
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginHorizontal="10dp"

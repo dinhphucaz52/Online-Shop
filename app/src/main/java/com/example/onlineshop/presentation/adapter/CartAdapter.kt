@@ -1,7 +1,6 @@
 package com.example.onlineshop.presentation.adapter
 
-class CartFoodAdapter : FoodAdapter() {
-
+class CartAdapter : ProductAdapter() {
     override fun onBindViewHolder(holder: FoodViewHolder, position: Int) {
 
     }

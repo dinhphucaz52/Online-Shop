@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_color"
+    tools:context=".presentation.activity.ProfileActivity">
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/appCompatImageView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/circleImageView"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/avatar"
+        app:civ_border_color="#ffffff"
+        app:civ_border_width="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/appCompatImageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/appCompatImageView"
+        app:layout_constraintTop_toBottomOf="@+id/appCompatImageView" />
+
+    <TextView
+        android:id="@+id/user_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:text="NGUYEN DINH PHUC"
+        android:textColor="@color/black"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/circleImageView"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/email_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="dinhphucaz52@gmail.com"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@+id/user_text_view"
+        tools:ignore="HardcodedText" />
+
+    <LinearLayout
+        android:layout_width="400dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email_text_view">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:drawableStart="@drawable/edit"
+            android:drawableEnd="@drawable/email"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/black"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="10dp"
+            android:text="Edit Profile"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            tools:ignore="HardcodedText,UseCompatTextViewDrawableXml" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:drawableStart="@drawable/ticket"
+            android:drawableEnd="@drawable/email"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/black"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="10dp"
+            android:text="Discount Voucher"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            tools:ignore="HardcodedText,UseCompatTextViewDrawableXml" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:drawableStart="@drawable/help"
+            android:drawableEnd="@drawable/email"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/black"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="10dp"
+            android:text="Support"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            tools:ignore="HardcodedText,UseCompatTextViewDrawableXml" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:drawableStart="@drawable/setting"
+            android:drawableEnd="@drawable/email"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/black"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="10dp"
+            android:text="Settings"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            tools:ignore="HardcodedText,UseCompatTextViewDrawableXml" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:drawableStart="@drawable/out"
+            android:drawableEnd="@drawable/email"
+            android:drawablePadding="10dp"
+            android:drawableTint="#bf2615"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="10dp"
+            android:text="Log Out"
+            android:textColor="#bf2615"
+            android:textSize="24sp"
+            tools:ignore="HardcodedText,UseCompatTextViewDrawableXml" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

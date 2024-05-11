@@ -5,12 +5,18 @@ import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.onlineshop.data.repository.MainRepository
 import com.example.onlineshop.databinding.ActivityMainBinding
-import com.example.onlineshop.presentation.adapter.FoodAdapter
+import com.example.onlineshop.presentation.adapter.ProductAdapter
 import com.example.onlineshop.presentation.`interface`.ActivityBaseInterface
+import com.example.onlineshop.presentation.viewmodel.MainViewmodel
 
 class MainActivity : AppCompatActivity(), ActivityBaseInterface {
     private lateinit var binding: ActivityMainBinding
+    private lateinit var mainRepository: MainRepository
+    private lateinit var productAdapter: ProductAdapter
+    private val mainMVVM = MainViewmodel.getInstance()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         init()
@@ -25,9 +31,19 @@ class MainActivity : AppCompatActivity(), ActivityBaseInterface {
         binding.foodRecyclerView.apply {
             layoutManager =
                 LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)
-            adapter = FoodAdapter()
+            productAdapter = ProductAdapter()
+            adapter = productAdapter
         }
+        mainRepository = MainRepository()
+        mainMVVM.init(mainRepository)
+        mainMVVM.getProducts()
+        dataBinding()
+    }
 
+    private fun dataBinding() {
+        mainMVVM.observeProductsLiveData().observe(this) {
+            productAdapter.updateData(it)
+        }
     }
 
     override fun setEvents() {
@@ -37,6 +53,9 @@ class MainActivity : AppCompatActivity(), ActivityBaseInterface {
             }
             historyButton.setOnClickListener {
                 startActivity(Intent(this@MainActivity, HistoryActivity::class.java))
+            }
+            nameUserTextView.setOnClickListener {
+                startActivity(Intent(this@MainActivity, ProfileActivity::class.java))
             }
         }
     }
