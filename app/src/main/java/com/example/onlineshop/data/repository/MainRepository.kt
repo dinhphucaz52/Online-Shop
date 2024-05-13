@@ -3,7 +3,7 @@ package com.example.onlineshop.data.repository
 import com.example.onlineshop.data.api.APIService
 import com.example.onlineshop.data.api.RetrofitClient
 import com.example.onlineshop.data.api.dto.ProductDTO
-import com.example.onlineshop.data.api.dto.response.GetProductResponse
+import com.example.onlineshop.data.api.dto.response.AppResponseDTO
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -16,21 +16,22 @@ class MainRepository {
     private val apiService: APIService? =
         RetrofitClient.getRetrofitInstance().create(APIService::class.java)
 
-    suspend fun getProducts(): List<ProductDTO> {
+    suspend fun getProducts(): AppResponseDTO<List<ProductDTO>> {
         return withContext(Dispatchers.IO) {
-            val deferred = CompletableDeferred<List<ProductDTO>>()
+            val deferred = CompletableDeferred<AppResponseDTO<List<ProductDTO>>>()
 
-            apiService?.getProduct()?.enqueue(object : Callback<GetProductResponse> {
+            apiService?.getProduct()?.enqueue(object : Callback<AppResponseDTO<List<ProductDTO>>> {
                 override fun onResponse(
-                    call: Call<GetProductResponse>,
-                    response: Response<GetProductResponse>
+                    call: Call<AppResponseDTO<List<ProductDTO>>>,
+                    response: Response<AppResponseDTO<List<ProductDTO>>>
                 ) {
-                    deferred.complete(response.body()?.data ?: listOf())
-                    println("MainRepository -> signIn -> onResponse: ${response.body()}")
+                    deferred.complete(response.body()!!)
                 }
 
-                override fun onFailure(call: Call<GetProductResponse>, throwable: Throwable) {
-                    println("MainRepository -> signIn -> onFailure: $throwable")
+                override fun onFailure(
+                    call: Call<AppResponseDTO<List<ProductDTO>>>, throwable: Throwable
+                ) {
+                    println("Error: ${throwable.message}")
                 }
             })
             deferred.await()

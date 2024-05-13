@@ -11,6 +11,7 @@ import com.example.onlineshop.databinding.ItemFoodBinding
 
 open class ProductAdapter : RecyclerView.Adapter<ProductAdapter.FoodViewHolder>() {
 
+    lateinit var listener: (Product) -> Unit
     private lateinit var context: Context
 
     private var productList = mutableListOf<Product>()
@@ -30,6 +31,7 @@ open class ProductAdapter : RecyclerView.Adapter<ProductAdapter.FoodViewHolder>(
             .into(holder.binding.productImageView)
 
         holder.binding.apply {
+
             foodNameTextView.text = product.name
             foodPriceTextView.text = product.getPrice()
             quantityTextView.text = product.quantity.toString()
@@ -42,6 +44,10 @@ open class ProductAdapter : RecyclerView.Adapter<ProductAdapter.FoodViewHolder>(
             minusQuantityTextView.setOnClickListener {
                 product.quantity--
                 quantityTextView.text = product.quantity.toString()
+            }
+
+            buttonAddToCart.setOnClickListener {
+                listener.invoke(product)
             }
         }
 

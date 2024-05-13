@@ -5,6 +5,8 @@ import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.onlineshop.data.api.AppResource
+import com.example.onlineshop.data.model.Product
 import com.example.onlineshop.data.repository.MainRepository
 import com.example.onlineshop.databinding.ActivityMainBinding
 import com.example.onlineshop.presentation.adapter.ProductAdapter
@@ -16,6 +18,10 @@ class MainActivity : AppCompatActivity(), ActivityBaseInterface {
     private lateinit var mainRepository: MainRepository
     private lateinit var productAdapter: ProductAdapter
     private val mainMVVM = MainViewmodel.getInstance()
+
+    private val cart by lazy {
+        mutableListOf<Product>()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +38,9 @@ class MainActivity : AppCompatActivity(), ActivityBaseInterface {
             layoutManager =
                 LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)
             productAdapter = ProductAdapter()
+            productAdapter.listener = {
+                cart.add(it)
+            }
             adapter = productAdapter
         }
         mainRepository = MainRepository()
@@ -42,19 +51,28 @@ class MainActivity : AppCompatActivity(), ActivityBaseInterface {
 
     private fun dataBinding() {
         mainMVVM.observeProductsLiveData().observe(this) {
-            productAdapter.updateData(it)
+            when (it) {
+                is AppResource.Error -> {
+                    println("MainActivity: ${it.error}")
+                }
+
+                is AppResource.Success -> {
+                    it.data?.let { it1 -> productAdapter.updateData(it1) }
+                }
+            }
         }
     }
 
     override fun setEvents() {
         binding.apply {
-            cartButton.setOnClickListener {
-                startActivity(Intent(this@MainActivity, CartActivity::class.java))
+            buttonCart.setOnClickListener {
+                val intent = Intent(this@MainActivity, CartActivity::class.java)
+                startActivity(intent)
             }
-            historyButton.setOnClickListener {
+            buttonHistory.setOnClickListener {
                 startActivity(Intent(this@MainActivity, HistoryActivity::class.java))
             }
-            nameUserTextView.setOnClickListener {
+            textViewNameUser.setOnClickListener {
                 startActivity(Intent(this@MainActivity, ProfileActivity::class.java))
             }
         }

@@ -60,7 +60,7 @@
 
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button"
+        android:id="@+id/button_add_to_cart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/orange_button_bg"

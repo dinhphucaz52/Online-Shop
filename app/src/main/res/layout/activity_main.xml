@@ -18,7 +18,7 @@
 
 
         <TextView
-            android:id="@+id/name_user_text_view"
+            android:id="@+id/text_view_name_user"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -30,7 +30,7 @@
             tools:ignore="HardcodedText" />
 
         <ImageView
-            android:id="@+id/history_button"
+            android:id="@+id/button_history"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/history"
@@ -41,7 +41,7 @@
             android:layout_height="50dp">
 
             <ImageView
-                android:id="@+id/cart_button"
+                android:id="@+id/button_cart"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/cart"

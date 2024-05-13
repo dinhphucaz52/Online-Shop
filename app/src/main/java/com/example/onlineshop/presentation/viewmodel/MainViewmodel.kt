@@ -3,6 +3,8 @@ package com.example.onlineshop.presentation.viewmodel
 import androidx.annotation.MainThread
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.onlineshop.common.AppCommon
+import com.example.onlineshop.data.api.AppResource
 import com.example.onlineshop.data.model.Product
 import com.example.onlineshop.data.repository.MainRepository
 import kotlinx.coroutines.CoroutineScope
@@ -27,21 +29,21 @@ class MainViewmodel : ViewModel() {
         this.mainRepository = mainRepository
     }
 
-    private val getProductsLiveData = MutableLiveData<List<Product>>()
+    private val getProductsLiveData = MutableLiveData<AppResource<List<Product>>>()
 
     fun observeProductsLiveData() = getProductsLiveData
 
     fun getProducts() {
         CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val products = mutableListOf<Product>()
-                mainRepository.getProducts().forEach {
-                    products.add(Product(it))
+            val request = mainRepository.getProducts()
+            if (request.result == AppCommon.REQUEST_DATA_FAIL) {
+                getProductsLiveData.postValue(AppResource.Error("Error"))
+            } else {
+                val productList = mutableListOf<Product>()
+                request.data?.forEach {
+                    productList.add(Product(it))
                 }
-                products.sortBy { it.name }
-                getProductsLiveData.postValue(products)
-            } catch (e: Exception) {
-                println("MainViewmodel getProducts(): $e")
+                getProductsLiveData.postValue(AppResource.Success(productList))
             }
         }
     }

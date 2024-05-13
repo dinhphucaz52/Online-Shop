@@ -20,7 +20,7 @@ data class Product(
         img = productDTO.img
         quantity = productDTO.quantity
         productDTO.gallery.forEach {
-            gallery.add(AppCommon.URL_API + "/" + it)
+            gallery.add(AppCommon.URL_API + it)
         }
     }
 

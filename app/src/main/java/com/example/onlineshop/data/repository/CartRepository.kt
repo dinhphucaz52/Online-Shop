@@ -2,7 +2,6 @@ package com.example.onlineshop.data.repository
 
 import com.example.onlineshop.data.api.APIService
 import com.example.onlineshop.data.api.RetrofitClient
-import com.example.onlineshop.data.api.dto.response.GetCartResponse
 import com.example.onlineshop.data.model.Cart
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
@@ -20,19 +19,19 @@ class CartRepository {
         return withContext(Dispatchers.IO) {
             val deferred = CompletableDeferred<Cart>()
 
-            apiService?.getCart()?.enqueue(object : Callback<GetCartResponse> {
-                override fun onResponse(
-                    call: Call<GetCartResponse>,
-                    response: Response<GetCartResponse>
-                ) {
-                    println("CartRepository -> getCarts -> onResponse: $response")
-                    (response.body()?.data)?.let { deferred.complete(Cart(it)) }
-                }
-
-                override fun onFailure(call: Call<GetCartResponse>, throwable: Throwable) {
-                    println("MainRepository -> signIn -> onFailure: $throwable")
-                }
-            })
+//            apiService?.getCart()?.enqueue(object : Callback<GetCartResponse> {
+//                override fun onResponse(
+//                    call: Call<GetCartResponse>,
+//                    response: Response<GetCartResponse>
+//                ) {
+//                    println("CartRepository -> getCarts -> onResponse: $response")
+//                    (response.body()?.data)?.let { deferred.complete(Cart(it)) }
+//                }
+//
+//                override fun onFailure(call: Call<GetCartResponse>, throwable: Throwable) {
+//                    println("MainRepository -> signIn -> onFailure: $throwable")
+//                }
+//            })
             deferred.await()
         }
     }
